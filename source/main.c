@@ -173,9 +173,10 @@ int payload_main(struct payload_args *args) {
     resolve_syscall();
 
 #ifdef PERSISTENT
+#warning "Persistent enabled."
     printf_notification(PAYLOAD_NAME"\n"
         "Persistent enabled.\n"
-        "Closing will keep ftp running.");
+        "Closing will keep FTP running.");
     // Great thanks to Specter for fork idea!
     f_exit = (void *) (f__read + 0xE30);
     f_fork = (void *) (f__read + 0x1DE0);
@@ -185,9 +186,10 @@ int payload_main(struct payload_args *args) {
         f_exit(0);
     }
 #else
+#warning "Persistent not enabled."
     printf_notification(PAYLOAD_NAME"\n"
         "Persistent not enabled.\n"
-        "Closing will exit FTP");
+        "Closing will exit FTP.");
     run_ftp(ip_address);
 #endif
 
