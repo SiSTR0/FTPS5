@@ -18,7 +18,9 @@ jobs:
 
     - name: Build
       run: |
+        make clean
         make
+        make clean
         make PERSIST=0
     - name: Upload payload
       uses: actions/upload-artifact@v3
