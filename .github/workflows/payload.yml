@@ -13,7 +13,8 @@ jobs:
     - name: Set env vars
       run: |
         echo "llvm_ver=9" >> $GITHUB_ENV
-        echo "elfname=ftps5.elf" >> $GITHUB_ENV
+        echo "elfname=ftps5-NP.elf" >> $GITHUB_ENV
+        echo "elfname=ftps5-P.elf" >> $GITHUB_ENV
 
     - name: Set up GCC
       uses: illusion0001/gha-setup-gcc@master
