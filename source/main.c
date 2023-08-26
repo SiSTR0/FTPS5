@@ -11,7 +11,7 @@ void resolve_syscall() {
 
 void klog(const char* fmt, ...) {
     char buffer[512];
-
+    f_memset(&buffer, 0, sizeof(buffer));
     va_list args;
     va_start(args, fmt);
     f_vsprintf(buffer, fmt, args);
@@ -23,18 +23,18 @@ void klog(const char* fmt, ...) {
 // https://github.com/OSM-Made/PS4-Notify
 void printf_notification(const char* fmt, ...) {
     SceNotificationRequest noti_buffer;
-
+    f_memset(&noti_buffer, 0, sizeof(noti_buffer));
     va_list args;
     va_start(args, fmt);
     f_vsprintf(noti_buffer.message, fmt, args);
     va_end(args);
-
+    /*
     noti_buffer.type = 0;
     noti_buffer.unk3 = 0;
     noti_buffer.use_icon_image_uri = 1;
     noti_buffer.target_id = -1;
     f_strcpy(noti_buffer.uri, "cxml://psnotification/tex_icon_system");
-
+    */
     f_sceKernelSendNotificationRequest(0, (SceNotificationRequest * ) & noti_buffer, sizeof(noti_buffer), 0);
 }
 
@@ -173,6 +173,9 @@ int payload_main(struct payload_args *args) {
     resolve_syscall();
 
 #ifdef PERSISTENT
+    printf_notification(PAYLOAD_NAME"\n"
+        "Persistent enabled.\n"
+        "Closing will keep ftp running.");
     // Great thanks to Specter for fork idea!
     f_exit = (void *) (f__read + 0xE30);
     f_fork = (void *) (f__read + 0x1DE0);
@@ -182,24 +185,9 @@ int payload_main(struct payload_args *args) {
         f_exit(0);
     }
 #else
-    run_ftp(ip_address);
-#endif
-
-    return 0;
-}
-
-#ifdef PERSISTENT
-    printf_notification(PAYLOAD_NAME"\n#ifdef PERSISTENT");
-    // Great thanks to Specter for fork idea!
-    f_exit = (void *) (f__read + 0xE30);
-    f_fork = (void *) (f__read + 0x1DE0);
-
-    if (f_fork() == 0) {
-        run_ftp(ip_address);
-        f_exit(0);
-    }
-#else
-    printf_notification(PAYLOAD_NAME"\nPERSISTENT not enabled\nClosing will exit FTP");
+    printf_notification(PAYLOAD_NAME"\n"
+        "Persistent not enabled.\n"
+        "Closing will exit FTP");
     run_ftp(ip_address);
 #endif
 
