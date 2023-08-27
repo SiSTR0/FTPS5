@@ -1,9 +1,9 @@
 # FTPS5
-FTP server for PS5 Webkit
+FTP server for PS5 Webkit.
 
 # Building
 
-Needs gcc 9 installed.
+Run `make`. Requires GCC or Clang to be installed.
 
 # Custom commands:
 
