@@ -5,7 +5,10 @@ SDIR    := source
 IDIRS   := -I. -Iinclude
 LDIRS   := -L. -Llib
 
+PERSIST ?= 1
+
 ifeq ($(PERSIST),0)
+        PERSISTENT :=
 else
         PERSISTENT := -DPERSISTENT
 endif
@@ -19,10 +22,13 @@ OBJS    := $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(CFILES)) $(patsubst $(SDIR)/%.
 
 LIBS :=
 
-TARGET = ftps5.elf
+all: ftps5-np.elf ftps5-p.elf
 
-$(TARGET): $(ODIR) $(OBJS)
-	$(CC) crt0.s $(ODIR)/*.o -o $(TARGET) $(CFLAGS) $(LFLAGS) $(LIBS)
+ftps5-np.elf: $(ODIR) $(OBJS)
+	$(CC) crt0.s $(ODIR)/*.o -o $@ $(CFLAGS) $(LFLAGS) $(LIBS)
+
+ftps5-p.elf: $(ODIR) $(OBJS)
+	$(CC) crt0.s $(ODIR)/*.o -o $@ $(CFLAGS) $(LFLAGS) $(LIBS)
 
 $(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -33,7 +39,7 @@ $(ODIR)/%.o: $(SDIR)/%.s
 $(ODIR):
 	@mkdir $@
 
-.PHONY: clean
+.PHONY: clean all
 
 clean:
 	rm -f $(shell basename $(CURDIR)).elf $(TARGET) $(ODIR)/*.o

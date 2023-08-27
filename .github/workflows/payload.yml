@@ -1,6 +1,6 @@
 name: Build payload
 
-on: push
+on: [ push, pull_request ]
 
 jobs:
   payload-build:
@@ -10,23 +10,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Set env vars
-      run: |
-        echo "llvm_ver=9" >> $GITHUB_ENV
-        echo "elfname=ftps5.elf" >> $GITHUB_ENV
-
     - name: Set up GCC
       uses: illusion0001/gha-setup-gcc@master
       with:
-        version: ${{ env.llvm_ver }}
+        version: 9
         platform: x64
 
-    - name: Build ${{ env.elfname }}
+    - name: Build
       run: make
 
     - name: Upload payload
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.elfname }}
-        path: ${{ env.elfname }}
+        name: ftps5
+        path: ./*.elf
         if-no-files-found: error

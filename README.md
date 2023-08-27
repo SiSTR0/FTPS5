@@ -7,12 +7,11 @@ Needs gcc 9 installed.
 
 # Custom commands:
 
-- MTRW: Remount /system and /system_ex partitions with read-write access
+- `MTRW`: Remount `/system` and `/system_ex` partitions with read-write access
 
 ## Known issue
-Forking webkit process causes a kernel panic when the console is shut down.
 
-Build with `make PERSIST=0` to avoid it but persistence will be lost.
+Forking webkit process causes a kernel panic when the console is shut down.
 
 ## Credits:
 
