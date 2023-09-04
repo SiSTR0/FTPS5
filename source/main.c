@@ -1,6 +1,6 @@
 #include "ftps4.h"
 
-#define PAYLOAD_NAME "FTPS5 v1.3"
+#define PAYLOAD_NAME "FTPS5 v1.4"
 
 int netdbg_sock;
 void* ptr_syscall;
