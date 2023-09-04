@@ -1,5 +1,8 @@
 # FTPS5
-FTP server for PS5 Webkit
+FTP server for PS5-IPV6-Kernel-Exploit
+
+# Supported Firmares
+3.00, 3.10, 3.20, 3.21, 4.00, 4.02, 4.03, 4.50, 4.51
 
 # Building
 
@@ -12,7 +15,7 @@ Needs gcc 9 installed.
 ## Known issue
 Forking webkit process causes a kernel panic when the console is shut down.
 
-Build with `make PERSIST=0` to avoid it but persistence will be lost.
+Use FTPS5-NP.elf to avoid it but persistence will be lost.
 
 ## Credits:
 
