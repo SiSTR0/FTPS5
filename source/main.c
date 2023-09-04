@@ -28,13 +28,6 @@ void printf_notification(const char* fmt, ...) {
     va_start(args, fmt);
     f_vsprintf(noti_buffer.message, fmt, args);
     va_end(args);
-    /*
-    noti_buffer.type = 0;
-    noti_buffer.unk3 = 0;
-    noti_buffer.use_icon_image_uri = 1;
-    noti_buffer.target_id = -1;
-    f_strcpy(noti_buffer.uri, "cxml://psnotification/tex_icon_system");
-    */
     f_sceKernelSendNotificationRequest(0, (SceNotificationRequest * ) & noti_buffer, sizeof(noti_buffer), 0);
 }
 
@@ -174,6 +167,7 @@ int payload_main(struct payload_args *args) {
 
 #ifdef PERSISTENT
 #warning "Persistent enabled."
+    // alert user what build they are using
     printf_notification(PAYLOAD_NAME"\n"
         "Persistent enabled.\n"
         "Closing will keep FTP running.");
@@ -187,6 +181,7 @@ int payload_main(struct payload_args *args) {
     }
 #else
 #warning "Persistent not enabled."
+    // alert user what build they are using
     printf_notification(PAYLOAD_NAME"\n"
         "Persistent not enabled.\n"
         "Closing will exit FTP.");
