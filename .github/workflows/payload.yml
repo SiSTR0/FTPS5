@@ -1,6 +1,6 @@
 name: Build payload
 
-on: push
+on: [ push, pull_request ]
 
 jobs:
   payload-build:
@@ -17,11 +17,8 @@ jobs:
         platform: x64
 
     - name: Build
-      run: |
-        make clean
-        make
-        make clean
-        make PERSIST=0
+      run: make
+
     - name: Upload payload
       uses: actions/upload-artifact@v3
       with:
