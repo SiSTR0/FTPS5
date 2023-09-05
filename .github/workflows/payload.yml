@@ -6,9 +6,18 @@ jobs:
   payload-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Run build script
-        run: ./build.sh
-        shell: bash
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up GCC
+      uses: illusion0001/gha-setup-gcc@master
+      with:
+        version: 9
+        platform: x64
+
+    - name: Build
+      run: make
 
     - name: Upload payload
       uses: actions/upload-artifact@v3
