@@ -17,7 +17,7 @@ jobs:
         platform: x64
 
     - name: Build
-      run: build.sh
+      run: ./build.sh
 
     - name: Upload payload
       uses: actions/upload-artifact@v3
