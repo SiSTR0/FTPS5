@@ -1,16 +1,16 @@
-CC      := gcc
-AS      := gcc
+CC      := gcc-9
+AS      := gcc-9
 ODIR    := build
 SDIR    := source
 IDIRS   := -I. -Iinclude
 LDIRS   := -L. -Llib
 
-PERSIST ?= 1
-
 ifeq ($(PERSIST),0)
         PERSISTENT :=
+        TARGET = ftps5-np.elf
 else
         PERSISTENT := -DPERSISTENT
+        TARGET = ftps5-p.elf
 endif
 
 CFLAGS  := $(PERSISTENT) $(IDIRS) -s -std=gnu11 -fno-builtin -fno-exceptions -fno-asynchronous-unwind-tables -nostartfiles -nostdlib -Wall -m64 -fPIC -mcmodel=small -nostartfiles
@@ -22,13 +22,8 @@ OBJS    := $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(CFILES)) $(patsubst $(SDIR)/%.
 
 LIBS :=
 
-all: ftps5-np.elf ftps5-p.elf
-
-ftps5-np.elf: $(ODIR) $(OBJS)
-	$(CC) crt0.s $(ODIR)/*.o -o $@ $(CFLAGS) $(LFLAGS) $(LIBS)
-
-ftps5-p.elf: $(ODIR) $(OBJS)
-	$(CC) crt0.s $(ODIR)/*.o -o $@ $(CFLAGS) $(LFLAGS) $(LIBS)
+$(TARGET): $(ODIR) $(OBJS)
+	$(CC) crt0.s $(ODIR)/*.o -o $(TARGET) $(CFLAGS) $(LFLAGS) $(LIBS)
 
 $(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -42,4 +37,4 @@ $(ODIR):
 .PHONY: clean all
 
 clean:
-	rm -f $(shell basename $(CURDIR)).elf $(TARGET) $(ODIR)/*.o
+	rm -f ./*.elf $(ODIR)/*.o
