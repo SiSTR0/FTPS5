@@ -5,8 +5,9 @@ FTP server for [PS5-IPV6-Kernel-Exploit](https://github.com/Cryptogenic/PS5-IPV6
 3.00, 3.10, 3.20, 3.21, 4.00, 4.02, 4.03, 4.50, 4.51
 
 # Building
-
 Needs gcc 9 installed.
+Use ./build.sh To build Both
+Use make To Build ftps5-p.elf
 
 # Custom commands:
 
